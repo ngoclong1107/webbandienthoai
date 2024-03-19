@@ -1,0 +1,36 @@
+﻿@model PagedList.IPagedList<DoAnCoSo.Models.SanPham>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "KQTimKiem";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="dt">
+    @foreach (var item in Model.OrderBy(n => n.GiaTien))
+    {
+
+        <div class="col-md-3 col-sm-6">
+            <a href="@Url.Action("Xemchitiet","SanPham", new {@MaSP=item.MaSP })">
+                <img src=@Url.Content("~" +item.AnhBia.ToString()) class="img-responsive" alt="" width="350" height="350" />
+            </a>
+            <center>
+                <h3>@item.TenSP</h3>
+                <h3 style="color:red">@String.Format("{0:0,0}", @item.GiaTien) VND</h3>
+                <br />
+                @if (item.SoLuong == 0)
+                {
+                    <button type="button" class="btn btn-danger" disabled>Sản phẩm đã hết hàng</button>
+                }
+                else
+                {
+                    <a class="btn btn-success" href="@Url.Action("ThemGioHang", "GioHang", new { @id = item.MaSP, @strURL = Request.Url.ToString() })">Thêm giỏ hàng</a>
+                }
+            </center>
+
+        </div>
+
+    }
+</div>
+  Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("KQTimKiem",
+    new { page }))

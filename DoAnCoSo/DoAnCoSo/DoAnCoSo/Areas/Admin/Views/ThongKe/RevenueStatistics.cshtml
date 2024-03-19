@@ -1,0 +1,87 @@
+﻿@{
+    ViewBag.Title = "Revenue Statistics";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Biểu đồ doanh thu hàng ngày</h2>
+
+<form id="searchForm">
+    Từ ngày: <input type="date" id="fromDate" name="fromDate">
+    Đến ngày: <input type="date" id="toDate" name="toDate">
+    <button type="submit">Tìm kiếm</button>
+</form>
+
+<div style="height:1000px;">
+    <canvas id="revenueChart" width="400" height="200"></canvas>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Lấy thông tin biểu đồ từ ViewBag
+        var dates = @Html.Raw(Json.Encode(ViewBag.Dates));
+        var revenues = @Html.Raw(Json.Encode(ViewBag.Revenues));
+        var costs = @Html.Raw(Json.Encode(ViewBag.Costs));
+        var profits = @Html.Raw(Json.Encode(ViewBag.Profits));
+
+        // Cập nhật biểu đồ mặc định khi tải trang
+        updateChart(dates, revenues, costs, profits);
+
+        // Thêm lắng nghe sự kiện submit form
+        document.getElementById('searchForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Lấy giá trị ngày từ form
+            var fromDate = document.getElementById('fromDate').value;
+            var toDate = document.getElementById('toDate').value;
+
+            // Chuyển đổi ngày thành chuỗi ISO để truyền vào URL
+            var fromIsoDate = new Date(fromDate).toISOString().substring(0, 10);
+            var toIsoDate = new Date(toDate).toISOString().substring(0, 10);
+
+            // Gửi yêu cầu tìm kiếm đến action method RevenueStatistics với tham số ngày
+            window.location.href = '/ThongKe/RevenueStatistics?fromDate=' + fromIsoDate + '&toDate=' + toIsoDate;
+        });
+    });
+
+    // Hàm cập nhật biểu đồ
+    function updateChart(dates, revenues, costs, profits) {
+        var ctx = document.getElementById('revenueChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: dates,
+                datasets: [
+                    {
+                        label: 'Doanh thu',
+                        data: revenues,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Chi phí',
+                        data: costs,
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Lợi nhuận',
+                        data: profits,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+</script>
+

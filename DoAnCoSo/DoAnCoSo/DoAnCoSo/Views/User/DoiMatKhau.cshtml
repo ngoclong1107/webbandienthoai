@@ -1,0 +1,59 @@
+﻿@model DoAnCoSo.Models.NguoiDung
+@{
+    ViewBag.Title = "DoiMatKhau";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm("DoiMatKhau", "User", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <hr />
+
+        @if (!String.IsNullOrEmpty(ViewBag.Fail))
+        {
+            <div class="alert alert-danger">
+                <strong>Lỗi!</strong> @ViewBag.Fail
+            </div>
+        }
+        <div class="form-group">
+            @Html.Label("Mật khẩu cũ:", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                <input type="password" name="matkhau" class="form-control" placeholder="Mật khẩu cũ" required="required" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Mật khẩu mới:", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                <input type="password" name="matKhauMoi" class="form-control" placeholder="Mật khẩu mới" required="required" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-3" for="MatKhauXacNhan">
+                Xác nhận mật khẩu:
+            </label>
+            <div class="col-md-9">
+                <input class="form-control text-box single-line input-validation-error"
+                       @*data-val="true" data-val-required="Phải nhập mật khẩu xác nhận!"*@
+                       id="MatKhauXacNhan" name="MatKhauXacNhan" type="password" value="" aria-describedby="MatKhauXacNhan-error" aria-invalid="true">
+                <span class="text-danger" data-valmsg-for="MatKhauXacNhan" data-valmsg-replace="true"></span>
+
+                @Html.ValidationMessage("MatKhauXacNhan", "", new { @class = "text-danger" })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-3 col-md-9">
+                <button type="submit" class="btn btn-primary">Lưu</button>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "XacNhanDatHang";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="alert">Đặt hàng thành công! Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.</div>
+<style>
+    .alert {
+        background-color: #4ef04e;
+        color: #fff;
+        text-align: center;
+        padding: 10px;
+        position: fixed;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 9999;
+        width: 100%;
+    }
+
+</style>
+<script>
+    function notifyUser() {
+        var alertBox = document.createElement('div');
+        alertBox.innerHTML = "Đặt hàng thành công! Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.";
+        alertBox.classList.add('alert');
+        document.body.appendChild(alertBox);
+    }
+
+    notifyUser();
+
+</script>

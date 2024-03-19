@@ -1,0 +1,49 @@
+﻿@model DoAnCoSo.Models.XacNhanMatKhau
+
+@{
+    ViewBag.Title = "NhapMaXacNhan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>NhapMaXacNhan</h2>
+
+
+@using (Html.BeginForm("NhapMaXacNhan", "QuenMatKhau", FormMethod.Post)) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <hr />
+
+    @if (!String.IsNullOrEmpty(ViewBag.Fail))
+    {
+        <div class="alert alert-danger">
+            <strong>Lỗi!</strong> @ViewBag.Fail
+        </div>
+    }
+    <h4>XacNhanMatKhau</h4>
+    <hr />
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.MaXacNhan, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.MaXacNhan, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.MaXacNhan, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="XacNhan" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

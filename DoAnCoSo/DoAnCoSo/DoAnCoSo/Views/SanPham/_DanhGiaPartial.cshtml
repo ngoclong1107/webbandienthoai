@@ -1,0 +1,78 @@
+﻿@model IEnumerable<DoAnCoSo.Models.DanhGia>
+
+<div id="div_allcomment">
+    @if (Model != null)
+    {
+        foreach (var itemcomment in Model)
+        {
+            <div class="row">
+                <!-- Review item START -->
+                <div class="d-md-flex my-4">
+                    <!-- Avatar -->
+                    <div class="avatar avatar-xl me-4 flex-shrink-0">
+                        <img class="avatar-img rounded-circle" src="@itemcomment.NguoiDung.AnhDaiDien" alt="avatar" width="40">
+                    </div>
+                    
+                    <!-- Text -->
+                    <div class="col-md-12">
+                        <div class="d-sm-flex mt-1 mt-md-0 align-items-center">
+                            <h5 class="me-3 mb-0">@itemcomment.NguoiDung.HoTen</h5> <p class="small mb-2"> @itemcomment.CommentDate</p>
+                            <!-- Review star -->
+                            <ul class="list-inline mb-0">
+                                <li class="list-inline-item me-0"><i class="fas fa-star text-warning "></i></li>
+                                @if (itemcomment.Rating >= 2)
+                                {
+                                    <li class="list-inline-item me-0"><i class="fas fa-star text-warning"></i></li>
+
+                                }
+                                else
+                                {
+                                    <li class="list-inline-item me-0"><i class="far fa-star text-warning"></i></li>
+                                }
+                                @if (itemcomment.Rating >= 3)
+                                {
+                                    <li class="list-inline-item me-0"><i class="fas fa-star text-warning"></i></li>
+
+                                }
+                                else
+                                {
+                                    <li class="list-inline-item me-0"><i class="far fa-star text-warning"></i></li>
+                                }
+                                @if (itemcomment.Rating >= 4)
+                                {
+                                    <li class="list-inline-item me-0"><i class="fas fa-star text-warning"></i></li>
+
+                                }
+                                else
+                                {
+                                    <li class="list-inline-item me-0"><i class="far fa-star text-warning"></i></li>
+                                }
+                                @if (itemcomment.Rating >= 5)
+                                {
+                                    <li class="list-inline-item me-0"><i class="fas fa-star text-warning"></i></li>
+
+                                }
+                                else
+                                {
+                                    <li class="list-inline-item me-0"><i class="far fa-star text-warning"></i></li>
+                                }
+
+                            </ul>
+                        </div>
+                        <!-- Info -->
+
+                        <div class="mt-2">
+                            <p class="mb-2">@itemcomment.NDDanhGia</p>
+                            <div class="bg-white"></div>
+                        </div>
+
+                        <!-- Reply button -->
+
+                    </div>
+
+                </div>
+            </div>
+        }
+    }
+</div>
+
